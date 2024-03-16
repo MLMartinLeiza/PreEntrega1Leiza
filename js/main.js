@@ -33,6 +33,7 @@ if (montoPrestamo <= 0 || tasaInteresAnual <= 0 || plazoEnMeses <= 0) {
 
     const pagoMensual = calcularPagoMensual(montoPrestamo, tasaInteresAnual, plazoEnMeses);
     console.log(`El pago mensual será de $${pagoMensual}. ` + plazoEnMeses + " cuotas.");
+    alert(`El pago mensual será de $${pagoMensual}. ` + plazoEnMeses + " cuotas.");
 }
 
 
