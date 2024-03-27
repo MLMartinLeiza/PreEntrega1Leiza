@@ -8,25 +8,21 @@ function solicitarNombre() {
     return nombre;
 }
 
-
-
 function solicitarEdad() {
     let edad = prompt("Ingresa tu edad");
-
     while (isNaN(edad) || edad < 18) {
         alert("Acceso denegado");
         edad = prompt("Ingresa tu edad");
     }
-
     alert("Acceso permitido");
-
 }
 
 function solicitarNumero(mensaje) {
-    let numero = prompt (mensaje);
-    while (isNaN(numero) || numero <= 0){
-    alert ("Ingrese un número válido.");
-    numero = prompt (mensaje);}
+    let numero = prompt(mensaje);
+    while (isNaN(numero) || numero <= 0) {
+        alert("Ingrese un número válido.");
+        numero = prompt(mensaje);
+    }
     return numero;
 }
 
@@ -43,7 +39,6 @@ let montoPrestamo = solicitarNumero("Ingrese el monto del préstamo:");
 let plazoEnMeses = solicitarNumero("Ingrese el plazo del préstamo en meses:");
 
 const tasaInteresAnual = 180 / 100;
-
 
 if (montoPrestamo <= 0 || tasaInteresAnual <= 0 || plazoEnMeses <= 0) {
     alert("Por favor, ingrese valores válidos.");
