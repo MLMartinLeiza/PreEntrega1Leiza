@@ -107,8 +107,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     const resultadoBusqueda = document.getElementById('resultado-busqueda');
 
                     if (palabrasEncontradas.length > 0) {
-                        let listaPalabras = palabrasEncontradas.map(palabra => `- ${palabra}`).join("\n");
-                        resultadoBusqueda.innerText = "Palabras clave relacionadas con 'préstamo':\n" + listaPalabras;
+                        let listaPalabras = palabrasEncontradas.map(palabra => ` ${palabra}`).join("\n");
+                        resultadoBusqueda.innerText = "Resultado de la busqueda:\n" + listaPalabras;
                     } else {
                         resultadoBusqueda.innerText = "No se encontraron palabras clave relacionadas con 'préstamo'.";
                     }
