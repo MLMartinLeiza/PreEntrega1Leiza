@@ -1,12 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Simulador de Préstamos</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
+
 <body>
-    <h1>PreEntrega1Leiza</h1>
-    <script src="./js/main.js"></script>
+    <header class="titulo">
+        <h1>Simulador de Préstamos</h1>
+    </header>
+
+    <main>
+        <section id="sesion">
+            <h2>Iniciar Sesión</h2>
+            <form id="sesion-form">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+                <label for="edad">Edad:</label>
+                <input type="number" id="edad" name="edad" required>
+                <button class="boton-sesion" type="button" onclick="gestionarSesion()">Iniciar Sesión</button>
+            </form>
+        </section>
+
+        <section id="registro" style="display: none;">
+            <h2>Registro</h2>
+            <p>Usuario no registrado, complete los datos.</p>
+            <form>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombreRegistro" name="nombreRegistro" required>
+                <label for="edad">Edad:</label>
+                <input type="number" id="edadRegistro" name="edadRegistro" required>
+                <button class="boton-sesion" type="button" onclick="registrarse()">Registrarse</button>
+            </form>
+        </section>
+
+        <section id="simulador">
+            <h2>Simulador</h2>
+            <form id="simulador-form">
+                <label for="monto">Monto del préstamo:</label>
+                <input type="number" id="montoPrestamo" name="montoPrestamo" required>
+                <label for="plazo">Plazo del préstamo (meses):</label>
+                <input type="number" id="plazoPrestamo" name="plazoPrestamo" required>
+                <button class="boton-sesion" type="button" onclick="calcularPrestamo()">Calcular</button>
+            </form>
+        </section>
+
+        <section id="resultados">
+            <h2>Resultado de la simulacion</h2>
+            <div id="resultado-prestamo"></div>
+        </section>
+
+        <section>
+            <h2>Consultas</h2>
+            <form id="consultas">
+                <label for="opciones">Selecciona una opcion</label>
+                <select name="opciones" id="opciones">
+                    <option value="opcion1">Solicitar Prestamo</option>
+                    <option value="opcion2">Buscar Prestamo</option>
+                    <option value="opcion3">Consultar tasa de interes</option>
+                    <option value="opcion4">Otras consultas</option>
+                </select>
+                <button type="button" id="botonContinuar">Continuar</button>
+            </form>
+
+            <div>
+                <p id="prestamo-solicitado"></p>
+            </div>
+
+            
+            <form id="busqueda" class="d-none">
+                <label for="palabra-busqueda">Buscar:</label>
+                <input type="text" id="palabra-busqueda" name="palabra-busqueda">
+                <button type="button" id="buscar">Buscar</button>
+            </form>
+            
+            <div id="resultado-busqueda" class="d-none"></div>
+            <p>Resultado de la busqueda</p>
+        </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Simulador de Préstamos. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="/js/main.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,23 @@
+body {
+    background-color: azure;
+}
+.boton-sesion {
+    border-radius: 1rem;
+}
+
+.titulo {
+    background-color: aquamarine;
+    border-radius: 1rem;
+    padding: 1rem;
+    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    justify-content: space-between;
+}
+
+.d-none {
+    display: none;
+}
