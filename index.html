@@ -25,7 +25,7 @@
             </form>
         </section>
 
-        <section id="registro" style="display: none;">
+        <section id="registro" class="d-none">
             <h2>Registro</h2>
             <p>Usuario no registrado, complete los datos.</p>
             <form>
@@ -35,7 +35,17 @@
                 <input type="number" id="edadRegistro" name="edadRegistro" required>
                 <button class="boton-sesion" type="button" onclick="registrarse()">Registrarse</button>
             </form>
+            
+                
+            
         </section>
+
+        <div>
+            <p id="mensaje-registro"></p>
+                <p id="mensaje-bienvenida"></p>
+                <p id="mensaje-acceso-denegado"></p>
+        </div>
+        
 
         <section id="simulador">
             <h2>Simulador</h2>
@@ -76,8 +86,10 @@
                 <button type="button" id="buscar">Buscar</button>
             </form>
 
-            <div></div>
+            
             <p id="resultado-busqueda"></p>
+            <p id="prestamos-ordenados"></p>
+
         </section>
     </main>
 

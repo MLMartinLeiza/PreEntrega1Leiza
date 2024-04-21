@@ -30,27 +30,32 @@ const consultas = document.getElementById("consultas");
 function gestionarSesion() {
     const nombre = sesionForm.elements['nombre'].value;
     const edad = parseInt(sesionForm.elements['edad'].value);
+    const mensajeRegistro = document.getElementById('mensaje-registro');
+    const mensajeBienvenida = document.getElementById('mensaje-bienvenida');
+    const mensajeAccesoDenegado = document.getElementById('mensaje-acceso-denegado');
 
     if (verificarUsuario(nombre)) {
-        alert(`¡Bienvenido de nuevo, ${nombre}!`);
+        mensajeBienvenida.innerText = `¡Bienvenido de nuevo, ${nombre}!`;
     } else {
         if (edad < 18) {
-            alert("Acceso denegado");
+            mensajeAccesoDenegado.innerText = "Acceso denegado";
             return;
+        } else {
+            mostrarFormularioRegistro();
         }
-        mostrarFormularioRegistro();
     }
 }
 
 function mostrarFormularioRegistro() {
-    document.getElementById('sesion').style.display = 'none';
-    document.getElementById('registro').style.display = 'block';
+    const registroSection = document.getElementById('registro');
+    registroSection.classList.remove('d-none');
 }
 
 function registrarse() {
     const nombre = nombreRegistroInput.value;
     const edad = parseInt(edadRegistroInput.value);
-    alert(new Usuario(nombre, edad).calcularFechaNacimiento());
+    const mensaje = new Usuario(nombre, edad).calcularFechaNacimiento();
+    document.getElementById("mensaje-registro").textContent = mensaje;
 }
 
 function calcularPrestamo() {
@@ -98,17 +103,19 @@ document.addEventListener('DOMContentLoaded', function () {
                         "No se encontraron palabras clave relacionadas con 'préstamo'.";
                 });
                 break;
-            case 'opcion3':
-                const prestamos = [
-                    { tipo: "préstamo hipotecario", tasaInteres: 0.05 },
-                    { tipo: "préstamo personal", tasaInteres: 0.08 },
-                    { tipo: "préstamo para empresas", tasaInteres: 0.1 },
-                    { tipo: "préstamo en dólares", tasaInteres: 0.06 }
-                ];
-                prestamos.sort((a, b) => a.tasaInteres - b.tasaInteres);
-                alert("Préstamos ordenados por tasa de interés (de menor a mayor):\n" +
-                    prestamos.map(prestamo => `- ${prestamo.tipo}: ${prestamo.tasaInteres * 100}%`).join("\n"));
-                break;
+                case 'opcion3':
+                    const prestamos = [
+                        { tipo: "préstamo hipotecario", tasaInteres: 0.05 },
+                        { tipo: "préstamo personal", tasaInteres: 0.08 },
+                        { tipo: "préstamo para empresas", tasaInteres: 0.1 },
+                        { tipo: "préstamo en dólares", tasaInteres: 0.06 }
+                    ];
+                    prestamos.sort((a, b) => a.tasaInteres - b.tasaInteres);
+                    const prestamosOrdenadosTexto = prestamos.map(prestamo => `- ${prestamo.tipo}: ${prestamo.tasaInteres * 100}%`).join("\n");
+                    const prestamosOrdenadosParrafo = document.getElementById('prestamos-ordenados');
+                    prestamosOrdenadosParrafo.innerText = "Préstamos ordenados por tasa de interés (de menor a mayor):\n" + prestamosOrdenadosTexto;
+                    break;
+                
             default:
                 console.log('Opción no válida');
         }
