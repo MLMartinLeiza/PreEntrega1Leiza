@@ -27,15 +27,19 @@ const nombreRegistroInput = document.getElementById('nombreRegistro');
 const edadRegistroInput = document.getElementById('edadRegistro');
 const consultas = document.getElementById("consultas");
 
+// Funcion con JSON y Storage
 function gestionarSesion() {
     const nombre = sesionForm.elements['nombre'].value;
     const edad = parseInt(sesionForm.elements['edad'].value);
-    const mensajeRegistro = document.getElementById('mensaje-registro');
     const mensajeBienvenida = document.getElementById('mensaje-bienvenida');
     const mensajeAccesoDenegado = document.getElementById('mensaje-acceso-denegado');
 
-    if (verificarUsuario(nombre)) {
-        mensajeBienvenida.innerText = `¡Bienvenido de nuevo, ${nombre}!`;
+    const usuariosRegistrados = JSON.parse(localStorage.getItem('usuarios')) || {};
+    const usuarioRegistrado = usuariosRegistrados[nombre.toLowerCase()];
+
+    if (usuarioRegistrado) {
+        mensajeBienvenida.innerText = `¡Bienvenido de nuevo, ${usuarioRegistrado.nombre}!`;
+
     } else {
         if (edad < 18) {
             mensajeAccesoDenegado.innerText = "Acceso denegado";
@@ -46,17 +50,23 @@ function gestionarSesion() {
     }
 }
 
+
 function mostrarFormularioRegistro() {
     const registroSection = document.getElementById('registro');
     registroSection.classList.remove('d-none');
 }
 
+// Función con JSON y Storage
 function registrarse() {
     const nombre = nombreRegistroInput.value;
     const edad = parseInt(edadRegistroInput.value);
-    const mensaje = new Usuario(nombre, edad).calcularFechaNacimiento();
+    const usuario = new Usuario(nombre, edad);
+    usuariosPreestablecidos[nombre.toLowerCase()] = usuario;
+    localStorage.setItem('usuarios', JSON.stringify(usuariosPreestablecidos));
+    const mensaje = usuario.calcularFechaNacimiento();
     document.getElementById("mensaje-registro").textContent = mensaje;
 }
+
 
 function calcularPrestamo() {
     const montoPrestamo = parseInt(document.getElementById('montoPrestamo').value);
@@ -103,19 +113,19 @@ document.addEventListener('DOMContentLoaded', function () {
                         "No se encontraron palabras clave relacionadas con 'préstamo'.";
                 });
                 break;
-                case 'opcion3':
-                    const prestamos = [
-                        { tipo: "préstamo hipotecario", tasaInteres: 0.05 },
-                        { tipo: "préstamo personal", tasaInteres: 0.08 },
-                        { tipo: "préstamo para empresas", tasaInteres: 0.1 },
-                        { tipo: "préstamo en dólares", tasaInteres: 0.06 }
-                    ];
-                    prestamos.sort((a, b) => a.tasaInteres - b.tasaInteres);
-                    const prestamosOrdenadosTexto = prestamos.map(prestamo => `- ${prestamo.tipo}: ${prestamo.tasaInteres * 100}%`).join("\n");
-                    const prestamosOrdenadosParrafo = document.getElementById('prestamos-ordenados');
-                    prestamosOrdenadosParrafo.innerText = "Préstamos ordenados por tasa de interés (de menor a mayor):\n" + prestamosOrdenadosTexto;
-                    break;
-                
+            case 'opcion3':
+                const prestamos = [
+                    { tipo: "préstamo hipotecario", tasaInteres: 0.05 },
+                    { tipo: "préstamo personal", tasaInteres: 0.08 },
+                    { tipo: "préstamo para empresas", tasaInteres: 0.1 },
+                    { tipo: "préstamo en dólares", tasaInteres: 0.06 }
+                ];
+                prestamos.sort((a, b) => a.tasaInteres - b.tasaInteres);
+                const prestamosOrdenadosTexto = prestamos.map(prestamo => `- ${prestamo.tipo}: ${prestamo.tasaInteres * 100}%`).join("\n");
+                const prestamosOrdenadosParrafo = document.getElementById('prestamos-ordenados');
+                prestamosOrdenadosParrafo.innerText = "Préstamos ordenados por tasa de interés (de menor a mayor):\n" + prestamosOrdenadosTexto;
+                break;
+
             default:
                 console.log('Opción no válida');
         }
