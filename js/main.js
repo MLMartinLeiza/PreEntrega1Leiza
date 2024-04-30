@@ -37,30 +37,20 @@ function gestionarSesion() {
     const usuariosRegistrados = JSON.parse(localStorage.getItem('usuarios')) || {};
     const usuarioRegistrado = usuariosRegistrados[nombre.toLowerCase()];
 
-    if (usuarioRegistrado) {
-        mensajeBienvenida.innerText = `¡Bienvenido de nuevo, ${usuarioRegistrado.nombre}!`;
-
-    } else {
-        if (edad < 18) {
-            mensajeAccesoDenegado.innerText = "Acceso denegado";
-            return;
-        } else {
-            mostrarFormularioRegistro();
-        }
-    }
+    usuarioRegistrado ? mensajeBienvenida.innerText = `¡Bienvenido de nuevo, ${usuarioRegistrado.nombre}!` :
+    edad < 18 ? mensajeAccesoDenegado.innerText = "Acceso denegado" : mostrarFormularioRegistro();
 }
 
-
 function mostrarFormularioRegistro() {
-    const registroSection = document.getElementById('registro');
-    registroSection.classList.remove('d-none');
+    document.getElementById('registro').classList.remove('d-none');
 }
 
 // Función con JSON y Storage
+
 function registrarse() {
-    const nombre = nombreRegistroInput.value;
-    const edad = parseInt(edadRegistroInput.value);
-    const usuario = new Usuario(nombre, edad);
+    const { value: nombre } = nombreRegistroInput;
+    const { value: edad } = edadRegistroInput;
+    const usuario = new Usuario(nombre, parseInt(edad));
     usuariosPreestablecidos[nombre.toLowerCase()] = usuario;
     localStorage.setItem('usuarios', JSON.stringify(usuariosPreestablecidos));
     const mensaje = usuario.calcularFechaNacimiento();
@@ -105,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 buscarButton.addEventListener('click', function () {
                     const palabrasClavePrestamo = ["préstamo hipotecario", "préstamo personal", "préstamo para empresas", "préstamo en dólares"];
                     const entradaUsuario = document.getElementById('palabra-busqueda').value.toLowerCase().trim();
-                    let palabrasEncontradas = palabrasClavePrestamo.filter(palabra => palabra.toLowerCase().includes(entradaUsuario) || palabra.toLowerCase().includes('préstamo'));
+                    let palabrasEncontradas = [...palabrasClavePrestamo].filter(palabra => palabra.toLowerCase().includes(entradaUsuario) || palabra.toLowerCase().includes('préstamo'));
 
                     const resultadoBusqueda = document.getElementById('resultado-busqueda');
                     resultadoBusqueda.innerText = palabrasEncontradas.length > 0 ?
