@@ -37,6 +37,8 @@ function gestionarSesion() {
     const usuariosRegistrados = JSON.parse(localStorage.getItem('usuarios')) || {};
     const usuarioRegistrado = usuariosRegistrados[nombre.toLowerCase()];
 
+    // Operadores avanzados
+
     usuarioRegistrado ? mensajeBienvenida.innerText = `¡Bienvenido de nuevo, ${usuarioRegistrado.nombre}!` :
     edad < 18 ? mensajeAccesoDenegado.innerText = "Acceso denegado" : mostrarFormularioRegistro();
 }
@@ -45,7 +47,7 @@ function mostrarFormularioRegistro() {
     document.getElementById('registro').classList.remove('d-none');
 }
 
-// Función con JSON y Storage
+// Función con JSON y Storage y Desestructuracion
 
 function registrarse() {
     const { value: nombre } = nombreRegistroInput;
@@ -88,6 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('prestamo-solicitado').innerText = "Préstamo solicitado correctamente";
                 break;
             case 'opcion2':
+
+            // Spread palabraClavePrestamo
                 const formularioBusqueda = document.getElementById('busqueda');
                 formularioBusqueda.classList.remove('d-none');
 
