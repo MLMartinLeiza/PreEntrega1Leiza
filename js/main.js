@@ -59,19 +59,30 @@ function registrarse() {
     document.getElementById("mensaje-registro").textContent = mensaje;
 }
 
+// Libreria numeral.js para formatear numeros pago mensual
+// Libreria Sweet para el alert 
 
 function calcularPrestamo() {
     const montoPrestamo = parseInt(document.getElementById('montoPrestamo').value);
     const plazoPrestamo = parseInt(document.getElementById('plazoPrestamo').value);
-    const tasaInteresAnual = 180;
+    const tasaInteresAnual = 180 / 100;
 
     if (montoPrestamo <= 0 || tasaInteresAnual <= 0 || plazoPrestamo <= 0) {
-        alert("Por favor, ingrese valores válidos.");
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Por favor, ingrese valores válidos.',
+            confirmButtonText: 'Aceptar',
+            iconHtml: '<i class="bi bi-exclamation-triangle"></i>'
+        });
     } else {
         const pagoMensual = calcularPagoMensual(montoPrestamo, tasaInteresAnual, plazoPrestamo);
-        document.getElementById('resultado-prestamo').innerText = `El pago mensual será de $${pagoMensual.toFixed(2)}. ${plazoPrestamo} cuotas.`;
+        const pagoMensualFormateado = numeral(pagoMensual.toFixed(2)).format('$0,0.00'); // Formatear el pago mensual
+        document.getElementById('resultado-prestamo').innerText = `El pago mensual será de ${pagoMensualFormateado}. ${plazoPrestamo} cuotas.`;
     }
 }
+
+
 
 function calcularPagoMensual(montoPrestamo, tasaInteresAnual, plazoEnMeses) {
     const capitalTotal = montoPrestamo * tasaInteresAnual;

@@ -1,21 +1,60 @@
 body {
-    background-color: azure;
-}
-.boton-sesion {
-    border-radius: 1rem;
+    background-color: #50FFB1;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-.titulo {
-    background-color: aquamarine;
-    border-radius: 1rem;
+header, footer {
+    background-color: #4FB286;
+    color: white;
+    text-align: center;
     padding: 1rem;
-    justify-content: center;
-    justify-content: space-between;
-    align-items: center;
+    border-radius: 0.5rem;
 }
 
-h1 {
-    justify-content: space-between;
+main {
+    padding: 1rem;
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+section > h2 {
+    color: #3C896D;
+}
+
+form label {
+    color: #4D685A;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+form input[type="text"],
+form input[type="number"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #4D685A;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    background-color: #546D64;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4FB286;
+}
+
+#prestamos-ordenados {
+    color: #3C896D;
 }
 
 .d-none {
