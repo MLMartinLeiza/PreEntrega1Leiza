@@ -16,7 +16,10 @@ const usuariosPreestablecidos = {
     martin: new Usuario("Martin", 29)
 };
 
-
+function verificarUsuario(nombre) {
+    const nombreLowerCase = nombre.toLowerCase();
+    return Object.keys(usuariosPreestablecidos).some(key => key.toLowerCase() === nombreLowerCase);
+}
 
 const sesionForm = document.getElementById('sesion-form');
 const registroForm = document.getElementById('registro');
@@ -71,16 +74,12 @@ async function registrarse() {
         const jsonData = { usuarios: usuariosRegistrados };
 
         await fetch('data/datos.json', {
-            method: 'PUT',
+            method: 'PUT', 
             body: JSON.stringify(jsonData),
             headers: {
                 'Content-Type': 'application/json'
             }
         });
-
-        // Almacenar datos del usuario en localStorage
-        localStorage.setItem('usuarioNombre', usuario.nombre);
-        localStorage.setItem('usuarioEdad', usuario.edad);
 
         const mensaje = usuario.calcularFechaNacimiento();
         document.getElementById("mensaje-registro").textContent = mensaje;
@@ -133,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
             case 'opcion2':
 
-                // Spread palabraClavePrestamo
+            // Spread palabraClavePrestamo
                 const formularioBusqueda = document.getElementById('busqueda');
                 formularioBusqueda.classList.remove('d-none');
 
