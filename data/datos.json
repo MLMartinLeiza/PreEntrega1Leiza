@@ -1,0 +1,15 @@
+{
+    "usuarios": [
+      { "nombre": "Juan", "edad": 30 },
+      { "nombre": "María", "edad": 25 },
+      { "nombre": "Pedro", "edad": 35 },
+      { "nombre": "Ana", "edad": 28 },
+      { "nombre": "Luis", "edad": 40 },
+      { "nombre": "Sofía", "edad": 22 },
+      { "nombre": "Carlos", "edad": 33 },
+      { "nombre": "Laura", "edad": 29 },
+      { "nombre": "Daniel", "edad": 31 },
+      { "nombre": "Lucía", "edad": 27 }
+    ]
+  }
+  

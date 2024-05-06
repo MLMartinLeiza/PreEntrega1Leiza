@@ -16,48 +16,79 @@ const usuariosPreestablecidos = {
     martin: new Usuario("Martin", 29)
 };
 
-function verificarUsuario(nombre) {
-    const nombreLowerCase = nombre.toLowerCase();
-    return Object.keys(usuariosPreestablecidos).some(key => key.toLowerCase() === nombreLowerCase);
-}
+
 
 const sesionForm = document.getElementById('sesion-form');
 const registroForm = document.getElementById('registro');
 const nombreRegistroInput = document.getElementById('nombreRegistro');
 const edadRegistroInput = document.getElementById('edadRegistro');
 const consultas = document.getElementById("consultas");
+function mostrarFormularioRegistro() {
+    registroForm.classList.remove('d-none');
+}
 
-// Funcion con JSON y Storage
-function gestionarSesion() {
+
+
+
+async function gestionarSesion() {
     const nombre = sesionForm.elements['nombre'].value;
     const edad = parseInt(sesionForm.elements['edad'].value);
     const mensajeBienvenida = document.getElementById('mensaje-bienvenida');
     const mensajeAccesoDenegado = document.getElementById('mensaje-acceso-denegado');
 
-    const usuariosRegistrados = JSON.parse(localStorage.getItem('usuarios')) || {};
-    const usuarioRegistrado = usuariosRegistrados[nombre.toLowerCase()];
+    try {
+        const response = await fetch('data/datos.json');
+        const data = await response.json();
+        const usuariosRegistrados = data.usuarios || [];
 
-    // Operadores avanzados
+        const usuarioRegistrado = usuariosRegistrados.find(user => user.nombre.toLowerCase() === nombre.toLowerCase());
 
-    usuarioRegistrado ? mensajeBienvenida.innerText = `¡Bienvenido de nuevo, ${usuarioRegistrado.nombre}!` :
-    edad < 18 ? mensajeAccesoDenegado.innerText = "Acceso denegado" : mostrarFormularioRegistro();
+        if (usuarioRegistrado) {
+            mensajeBienvenida.innerText = `¡Bienvenido de nuevo, ${usuarioRegistrado.nombre}!`;
+        } else if (edad < 18 || nombre.trim() === "") { 
+            mensajeAccesoDenegado.innerText = "Acceso denegado";
+        } else {
+            mostrarFormularioRegistro();
+        }
+    } catch (error) {
+        console.error('Error al obtener datos de usuarios:', error);
+    }
 }
 
-function mostrarFormularioRegistro() {
-    document.getElementById('registro').classList.remove('d-none');
-}
 
-// Función con JSON y Storage y Desestructuracion
-
-function registrarse() {
+async function registrarse() {
     const { value: nombre } = nombreRegistroInput;
     const { value: edad } = edadRegistroInput;
     const usuario = new Usuario(nombre, parseInt(edad));
-    usuariosPreestablecidos[nombre.toLowerCase()] = usuario;
-    localStorage.setItem('usuarios', JSON.stringify(usuariosPreestablecidos));
-    const mensaje = usuario.calcularFechaNacimiento();
-    document.getElementById("mensaje-registro").textContent = mensaje;
+
+    try {
+        const response = await fetch('data/datos.json');
+        const data = await response.json();
+        const usuariosRegistrados = data.usuarios || [];
+
+        usuariosRegistrados.push({ nombre: usuario.nombre, edad: usuario.edad });
+
+        const jsonData = { usuarios: usuariosRegistrados };
+
+        await fetch('data/datos.json', {
+            method: 'PUT',
+            body: JSON.stringify(jsonData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        // Almacenar datos del usuario en localStorage
+        localStorage.setItem('usuarioNombre', usuario.nombre);
+        localStorage.setItem('usuarioEdad', usuario.edad);
+
+        const mensaje = usuario.calcularFechaNacimiento();
+        document.getElementById("mensaje-registro").textContent = mensaje;
+    } catch (error) {
+        console.error('Error al registrar usuario:', error);
+    }
 }
+
 
 // Libreria numeral.js para formatear numeros pago mensual
 // Libreria Sweet para el alert 
@@ -102,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
             case 'opcion2':
 
-            // Spread palabraClavePrestamo
+                // Spread palabraClavePrestamo
                 const formularioBusqueda = document.getElementById('busqueda');
                 formularioBusqueda.classList.remove('d-none');
 
