@@ -1,3 +1,27 @@
+// Modo nocturno con localStorage
+
+function toggleModoNocturno() {
+    console.log('Cambiando modo nocturno...');
+    const cuerpo = document.body;
+    cuerpo.classList.toggle('modo-nocturno');
+    const modoNocturnoActivo = cuerpo.classList.contains('modo-nocturno');
+    localStorage.setItem('modoNocturno', modoNocturnoActivo);
+}
+
+function inicializarModoNocturno() {
+    const modoNocturnoGuardado = localStorage.getItem('modoNocturno');
+    if (modoNocturnoGuardado === 'true') {
+        toggleModoNocturno(); 
+    }
+}
+
+const modoNocturnoBtn = document.getElementById('modoNocturnoBtn');
+modoNocturnoBtn.addEventListener('click', toggleModoNocturno);
+
+document.addEventListener('DOMContentLoaded', inicializarModoNocturno);
+
+
+
 function Usuario(nombre, edad) {
     this.nombre = nombre;
     this.edad = edad;
@@ -57,7 +81,6 @@ async function gestionarSesion() {
         console.error('Error al obtener datos de usuarios:', error);
     }
 }
-
 
 async function registrarse() {
     const { value: nombre } = nombreRegistroInput;

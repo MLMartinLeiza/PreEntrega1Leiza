@@ -1,3 +1,4 @@
+/* Estilos normales */
 body {
     background-color: #50FFB1;
     font-family: Arial, sans-serif;
@@ -59,4 +60,10 @@ button:hover {
 
 .d-none {
     display: none;
+}
+
+
+body.modo-nocturno {
+    background-color: #1a1a1a;
+    color: #ffffff;
 }
